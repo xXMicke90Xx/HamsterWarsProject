@@ -1,0 +1,58 @@
+﻿@page "/Gallery"
+@using HamsterWars.Shared.Models;
+@inject HttpClient client
+
+
+@using Newtonsoft.Json
+
+
+
+
+
+
+@foreach(var animal in hamsters)
+{
+<div class="card">
+    <div class="card-header">
+
+    </div>
+    <div class="card-img" style="height: 150px; width: 150px;">
+
+    </div>
+    <div class="card-body">
+        <p>Name: </p>
+        <p>Age: </p>
+        <p>FavFood: </p>
+        <p>Loves: </p>
+        <p>Wins: </p>
+        <p>Losses: </p>
+        <p>Games: </p>
+    </div>
+    <div>
+        <button class="btn btn-danger" @onclick="OnDeleteClicked">Delete</button>
+    </div>
+</div>
+}
+
+@t;
+
+@code {
+
+
+    string t;
+    List<Hamster> hamsters = new List<Hamster>();
+    Hamster h;
+    protected override void OnInitialized()
+    {
+
+        string s = client.GetFromJsonAsync<Hamster>("api/hamsters").Result == null ? "none" : client.GetFromJsonAsync<Hamster>("api/hamsters").Result.ToString();
+        
+        
+    }
+
+
+   protected async Task OnDeleteClicked()
+    {
+        
+    }
+}

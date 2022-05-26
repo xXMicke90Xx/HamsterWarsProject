@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars.Server", "HamsterWars\Server\HamsterWars.Server.csproj", "{309D09EB-9809-418D-BA10-7EC5170AECD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.Server", "HamsterWars\Server\HamsterWars.Server.csproj", "{309D09EB-9809-418D-BA10-7EC5170AECD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars.Client", "HamsterWars\Client\HamsterWars.Client.csproj", "{5CC1E69E-0F0D-4A73-BD7A-1D9E5ADF7B85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.Client", "HamsterWars\Client\HamsterWars.Client.csproj", "{5CC1E69E-0F0D-4A73-BD7A-1D9E5ADF7B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamsterWars.Shared", "HamsterWars\Shared\HamsterWars.Shared.csproj", "{42167721-D3CF-4DC3-82DA-A5CCA451902E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HamsterWars.Shared", "HamsterWars\Shared\HamsterWars.Shared.csproj", "{42167721-D3CF-4DC3-82DA-A5CCA451902E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
