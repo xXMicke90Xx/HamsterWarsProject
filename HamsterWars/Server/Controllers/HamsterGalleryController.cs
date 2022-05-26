@@ -49,14 +49,30 @@ namespace HamsterWars.Server.Controllers
 
         // POST api/<HamsterController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<List<Hamster>>> AddHamster([FromBody] Hamster hamster)
         {
+            context.Add(hamster);
+            return Ok(hamster);
         }
 
         // PUT api/<HamsterController>/5
         [HttpPut("/hamsters/{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult<List<Hamster>>> UpdateHamster(int Id, [FromBody] Hamster request)
         {
+
+            //INTE KLAR
+            var findHamster = context.Hamsters.Find(Id,request);
+            //var findHamsterA = context.Hamsters.Find(x => x.id == Id);
+            if (findHamster == null)
+                return BadRequest("Hamster not found");
+            findHamster.Name = request.Name;
+            findHamster.Age = request.Age;
+            findHamster.Loves = request.Loves;
+            findHamster.Games = request.Games;
+            findHamster.Wins = request.Wins;
+            findHamster.Losses = request.Losses;
+
+             return Ok(request);
         }
 
         // DELETE api/<HamsterController>/5
