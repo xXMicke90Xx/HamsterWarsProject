@@ -7,7 +7,7 @@
 
 
 
-
+<button @onclick="CreateCritter" type="button" class="btn btn-primary">Create Critter</button>
 @foreach (var animal in hamsters)
 {
     
@@ -28,7 +28,7 @@
             <p>Games: @animal.Games</p>
         </div>
         <div>
-            <button class="btn btn-danger" @onclick="@(e => DeleteCritter(animal.id))">Delete</button>
+            <button class="btn btn-danger" @onclick="@(e => DeleteCritter(animal.id))">Delete</button>           
         </div>
     </div>
 }
@@ -37,7 +37,7 @@
 
 @code {
     List<Hamster>? hamsters = new List<Hamster>();
-
+    Hamster hamster;
     protected override async Task OnInitializedAsync()
     {
         try
@@ -52,7 +52,15 @@
     }
     async Task DeleteCritter(int id)
     {
-        await client.DeleteAsync($"HamsterGallery/{id}");
+
+        hamster = hamsters.Where(x => x.id == id).SingleOrDefault();
+        hamsters.Remove(hamster);
+        await client.DeleteAsync($"HamsterGallery/hamsters/{id}");
+
     }
-    
+
+    async Task CreateCritter()
+    {
+        
+    }
 }

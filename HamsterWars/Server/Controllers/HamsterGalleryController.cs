@@ -72,9 +72,15 @@ namespace HamsterWars.Server.Controllers
         }
 
         // DELETE api/<HamsterController>/5
-        [HttpDelete("/hamsters/{id}")]
+        [HttpDelete("hamsters/{id}")]
         public void Delete(int id)
         {
+            Hamster hamster = context.Hamsters.Find(id);
+            if (hamster != null)
+            {
+                context.Hamsters.Remove(hamster);
+                context.SaveChanges();
+            }
         }
     }
 }
