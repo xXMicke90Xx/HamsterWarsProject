@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace HamsterWars.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class HamsterGalleryController : ControllerBase
     {
@@ -21,27 +21,23 @@ namespace HamsterWars.Server.Controllers
 
 
         // GET: api/<HamsterController>
-        [HttpGet("/api/hamsters")]
-        public IActionResult GetAll()
+        [HttpGet("hamsters")]
+        
+        public IEnumerable<Hamster> Get()
         {
-            Hamster [] hamsters = context.Hamsters.ToArray();
-            
-            if (hamsters.Length > 0)
-            {
-                string t = JsonConvert.SerializeObject(hamsters);
-                return Ok(t);
-            }
-            else
-                return BadRequest("No Hamsters was found");
+            List<Hamster> hamsters = context.Hamsters.ToList();              
+                return hamsters;
+           
+               
         }
-        [HttpGet("/hamsters/random")]
+        [HttpGet("hamsters/random")]
         public IEnumerable<string> GetRandom()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<HamsterController>/5
-        [HttpGet("/hamsters/{id}")]
+        [HttpGet("hamsters/{id}")]
         public string GetOne(int id)
         {
             return "value";
@@ -56,7 +52,7 @@ namespace HamsterWars.Server.Controllers
         }
 
         // PUT api/<HamsterController>/5
-        [HttpPut("/hamsters/{id}")]
+        [HttpPut("hamsters/{id}")]
         public async Task<ActionResult<List<Hamster>>> UpdateHamster(int Id, [FromBody] Hamster request)
         {
 

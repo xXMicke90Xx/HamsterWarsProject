@@ -1,8 +1,6 @@
 ﻿@page "/Gallery"
 @using HamsterWars.Shared.Models;
 @inject HttpClient client
-
-
 @using Newtonsoft.Json
 
 
@@ -10,49 +8,51 @@
 
 
 
-@foreach(var animal in hamsters)
+@foreach (var animal in hamsters)
 {
-<div class="card">
-    <div class="card-header">
-
+    
+    <div class="card">
+        <div class="card-header">
+            
+        </div>
+        <div class="card-img" style="height: 150px; width: 150px; float: left;">
+            <img style="position: relative; float: left; height: 150px; width: 150px;" src="/images/hamsters/@animal.ImgName.ToString()">
+        </div>
+        <div class="card-body">
+            <p>Name: @animal.Name </p>
+            <p>Age: @animal.Age</p>
+            <p>FavFood: @animal.FavFood</p>
+            <p>Loves: @animal.Loves</p>
+            <p>Wins: @animal.Wins</p>
+            <p>Losses: @animal.Losses</p>
+            <p>Games: @animal.Games</p>
+        </div>
+        <div>
+            <button class="btn btn-danger" @onclick="@(e => DeleteCritter(animal.id))">Delete</button>
+        </div>
     </div>
-    <div class="card-img" style="height: 150px; width: 150px;">
-
-    </div>
-    <div class="card-body">
-        <p>Name: </p>
-        <p>Age: </p>
-        <p>FavFood: </p>
-        <p>Loves: </p>
-        <p>Wins: </p>
-        <p>Losses: </p>
-        <p>Games: </p>
-    </div>
-    <div>
-        <button class="btn btn-danger" @onclick="OnDeleteClicked">Delete</button>
-    </div>
-</div>
 }
 
-@t;
+
 
 @code {
+    List<Hamster>? hamsters = new List<Hamster>();
 
-
-    string t;
-    List<Hamster> hamsters = new List<Hamster>();
-    Hamster h;
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        try
+        {
+            hamsters = await client.GetFromJsonAsync<List<Hamster>>("HamsterGallery/hamsters");
+        }
+        catch (Exception ex)
+        {
 
-        string s = client.GetFromJsonAsync<Hamster>("api/hamsters").Result == null ? "none" : client.GetFromJsonAsync<Hamster>("api/hamsters").Result.ToString();
-        
-        
+        }
+
     }
-
-
-   protected async Task OnDeleteClicked()
+    async Task DeleteCritter(int id)
     {
-        
+        await client.DeleteAsync($"HamsterGallery/{id}");
     }
+    
 }
