@@ -1,0 +1,52 @@
+﻿@using HamsterWars.Shared.Models
+@using System.Net.Http.Headers
+@inject HttpClient client
+
+<h2>
+    @LastSubmitResult
+</h2>
+
+<EditForm method="post" Model=@hamster OnValidSubmit=@ValidFormSubmitted OnInvalidSubmit=@InvalidFormSubmitted class="my-3">
+    <div class="my-3">
+        <DataAnnotationsValidator />
+        <input @bind-value="@hamster.Name" type="text" placeholder="Name" />
+        <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
+        <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
+        <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
+        
+    </div>
+    <button class="btn btn-primary" type="submit" value="Save">Submit</button>
+</EditForm>
+@code {
+    Hamster hamster = new Hamster();
+
+    string LastSubmitResult;
+
+    void FormSubmitted(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        LastSubmitResult =
+          formIsValid
+          ? "Success - form was valid"
+          : "Failure - form was invalid";
+    }
+
+    void ValidFormSubmitted(EditContext editContext)
+    {
+
+        client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
+        LastSubmitResult = "Hamster har blivit tillagt, uppdatera sidan!";
+
+    }
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        LastSubmitResult = "OnInvalidSubmit was executed";
+    }
+
+    
+
+}
+
+
+
+

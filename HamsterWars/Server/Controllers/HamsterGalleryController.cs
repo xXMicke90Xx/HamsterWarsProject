@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HamsterWars.Server.DataBase;
+﻿using HamsterWars.Server.DataBase;
 using HamsterWars.Shared.Models;
-using System.Text.Json.Serialization;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HamsterWars.Server.Controllers
 {
@@ -31,16 +27,19 @@ namespace HamsterWars.Server.Controllers
                
         }
         [HttpGet("hamsters/random")]
-        public IEnumerable<string> GetRandom()
+        public Hamster GetRandom()
         {
-            return new string[] { "value1", "value2" };
+            List<Hamster> hamsters = context.Hamsters.ToList();
+            Random random = new Random();           
+            return hamsters[random.Next(0, hamsters.Count()+1)];
         }
 
         // GET api/<HamsterController>/5
         [HttpGet("hamsters/{id}")]
-        public string GetOne(int id)
+        public Hamster GetOne(int id)
         {
-            return "value";
+            Hamster hamster = context.Hamsters.Find(id);
+            return hamster;
         }
 
         // POST api/<HamsterController>
@@ -48,6 +47,7 @@ namespace HamsterWars.Server.Controllers
         public async Task<ActionResult<List<Hamster>>> AddHamster([FromBody] Hamster hamster)
         {
             context.Add(hamster);
+            context.SaveChanges();
             return Ok(hamster);
         }
 
@@ -57,7 +57,7 @@ namespace HamsterWars.Server.Controllers
         {
 
             //INTE KLAR
-            var findHamster = context.Hamsters.Find(Id,request);
+            var findHamster = context.Hamsters.Find(Id);
             //var findHamsterA = context.Hamsters.Find(x => x.id == Id);
             if (findHamster == null)
                 return BadRequest("Hamster not found");

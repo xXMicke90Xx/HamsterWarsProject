@@ -14,11 +14,20 @@ namespace HamsterWars.Server.DataBase
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Hamster>(b =>
+            {
+                b.HasKey(e => e.Id);
+                b.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+
+
             modelBuilder.Entity<Hamster>().HasData(
                 new List<Hamster>
                 { new Hamster
                 {
-                    id = 1,
+                    Id = 1,
                     Name = "McFuzz",
                     Age = 4,
                     FavFood = "Cheese",
@@ -27,7 +36,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 2,
+                    Id = 2,
                     Name = "Karin",
                     Age = 50,
                     FavFood = "Meatballs",
@@ -36,7 +45,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id=3,
+                    Id=3,
                     Name = "Nicolas",
                     Age = 11,
                     FavFood = "Pizza",
@@ -45,7 +54,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 4,
+                    Id = 4,
                     Name = "Pedro",
                     Age = 105,
                     FavFood = "Burrito",
@@ -54,7 +63,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 5,
+                    Id = 5,
                     Name = "Pancake",
                     Age = 2,
                     FavFood = "Pancakes",
@@ -63,7 +72,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 6,
+                    Id = 6,
                     Name = "Carl",
                     Age = 6,
                     FavFood = "Cables",
@@ -72,7 +81,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 7,
+                    Id = 7,
                     Name = "Mike",
                     Age = 59,
                     FavFood = "Bananas",
@@ -81,7 +90,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 8,
+                    Id = 8,
                     Name = "Wizard",
                     Age = 5000,
                     FavFood = "Magic Rabbits",
@@ -90,7 +99,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 9,
+                    Id = 9,
                     Name = "Jorma",
                     Age = 30,
                     FavFood = "Coffee",
@@ -99,7 +108,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 10,
+                    Id = 10,
                     Name = "Codey",
                     Age = 9,
                     FavFood = "Sausage",
@@ -108,7 +117,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 11,
+                    Id = 11,
                     Name = "Togepi",
                     Age = 1,
                     FavFood = "Tamato",
@@ -117,7 +126,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 12,
+                    Id = 12,
                     Name = "Poopers",
                     Age = 13,
                     FavFood = "Beans",
@@ -126,7 +135,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 13,
+                    Id = 13,
                     Name = "Kyle",
                     Age = 20,
                     FavFood = "Pineapple",
@@ -135,7 +144,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 14,
+                    Id = 14,
                     Name = "Pog",
                     Age = 666,
                     FavFood = "Human leftovers",
@@ -144,7 +153,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 15,
+                    Id = 15,
                     Name = "DJ",
                     Age = 21,
                     FavFood = "Beer",
@@ -153,7 +162,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 16,
+                    Id = 16,
                     Name = "Blanket",
                     Age = 4,
                     FavFood = "Soup",
@@ -162,7 +171,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 17,
+                    Id = 17,
                     Name = "Paranoia",
                     Age = 12,
                     FavFood = "...",
@@ -171,7 +180,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 18,
+                    Id = 18,
                     Name = "Pirate",
                     Age = 30,
                     FavFood = "COINS",
@@ -180,7 +189,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 19,
+                    Id = 19,
                     Name = "Green",
                     Age = 4,
                     FavFood = "Cheeseballs",
@@ -189,7 +198,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 20,
+                    Id = 20,
                     Name = "Snoop",
                     Age = 420,
                     FavFood = "Dutch stuff",
@@ -198,7 +207,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 21,
+                    Id = 21,
                     Name = "Dave",
                     Age = 3,
                     FavFood = "Wheat",
@@ -207,7 +216,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 22,
+                    Id = 22,
                     Name = "McQueen",
                     Age = 5,
                     FavFood = "Candy",
@@ -216,7 +225,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 23,
+                    Id = 23,
                     Name = "Chuck",
                     Age = 8,
                     FavFood = "Twinkies",
@@ -225,7 +234,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 24,
+                    Id = 24,
                     Name = "Soda",
                     Age = 5,
                     FavFood = "Grass",
@@ -234,7 +243,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 25,
+                    Id = 25,
                     Name = "Questionmark",
                     Age = 0,
                     FavFood = "?",
@@ -243,7 +252,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 26,
+                    Id = 26,
                     Name = "Milk",
                     Age = 1,
                     FavFood = "Hamstermilk",
@@ -252,7 +261,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 27,
+                    Id = 27,
                     Name = "Boy",
                     Age = 40,
                     FavFood = "Marshmellows",
@@ -261,7 +270,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 28,
+                    Id = 28,
                     Name = "Kid",
                     Age = 40,
                     FavFood = "Marshmellows",
@@ -270,7 +279,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 29,
+                    Id = 29,
                     Name = "Chemical",
                     Age = 3,
                     FavFood = "Acid",
@@ -279,7 +288,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 30,
+                    Id = 30,
                     Name = "Little shit",
                     Age = 0,
                     FavFood = "Poop",
@@ -288,7 +297,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 31,
+                    Id = 31,
                     Name = "Milo",
                     Age = 9,
                     FavFood = "Everything",
@@ -297,7 +306,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 32,
+                    Id = 32,
                     Name = "Lobba",
                     Age = 40,
                     FavFood = "Pancakes",
@@ -306,7 +315,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 33,
+                    Id = 33,
                     Name = "Swagrid",
                     Age = 6000,
                     FavFood = "Sausages",
@@ -315,7 +324,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 34,
+                    Id = 34,
                     Name = "Mark",
                     Age = 1,
                     FavFood = "Ham",
@@ -324,7 +333,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 35,
+                    Id = 35,
                     Name = "Sunny",
                     Age = 12,
                     FavFood = "Carrots",
@@ -333,7 +342,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 36,
+                    Id = 36,
                     Name = "Ash",
                     Age = 5,
                     FavFood = "Paper",
@@ -342,7 +351,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 37,
+                    Id = 37,
                     Name = "Swagrid",
                     Age = 6000,
                     FavFood = "Sausages",
@@ -351,7 +360,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 38,
+                    Id = 38,
                     Name = "Alfons",
                     Age = 2,
                     FavFood = "Meat",
@@ -360,7 +369,7 @@ namespace HamsterWars.Server.DataBase
                 },
                 new Hamster
                 {
-                    id = 39,
+                    Id = 39,
                     Name = "Tetris",
                     Age = 30,
                     FavFood = "Chicken",
@@ -368,7 +377,7 @@ namespace HamsterWars.Server.DataBase
                     ImgName = "hamster-39.jpg"
                 },new Hamster
                 {
-                    id = 40,
+                    Id = 40,
                     Name = "Pepsi",
                     Age = 3,
                     FavFood = "Cheese",

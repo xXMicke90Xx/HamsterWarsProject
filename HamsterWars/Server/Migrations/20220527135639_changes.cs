@@ -4,16 +4,15 @@
 
 namespace HamsterWars.Server.Migrations
 {
-    public partial class init2 : Migration
+    public partial class changes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(
                 table: "Hamsters",
-                columns: new[] { "id", "Age", "FavFood", "Games", "ImgName", "Losses", "Loves", "Name", "Wins" },
+                columns: new[] { "Id", "Age", "FavFood", "Games", "ImgName", "Losses", "Loves", "Name", "Wins" },
                 values: new object[,]
                 {
-                    { 1, 4, "Cheese", 0, "hamster-1.jpg", 0, "Ball", "McFuzz", 0 },
                     { 2, 50, "Meatballs", 0, "hamster-2.jpg", 0, "Running wheel", "Karin", 0 },
                     { 3, 11, "Pizza", 0, "hamster-3.jpg", 0, "Nothing", "Nicolas", 0 },
                     { 4, 105, "Burrito", 0, "hamster-4.jpg", 0, "Dancing", "Pedro", 0 },
@@ -60,202 +59,197 @@ namespace HamsterWars.Server.Migrations
         {
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 2);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 3);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 4);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 5);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 6);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 7);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 8);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 9);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 10);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 11);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 12);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 13);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 14);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 15);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 16);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 17);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 18);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 19);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 20);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 21);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 22);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 23);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 24);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 25);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 26);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 27);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 28);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 29);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 30);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 31);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 32);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 33);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 34);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 35);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 36);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 37);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 38);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 39);
 
             migrationBuilder.DeleteData(
                 table: "Hamsters",
-                keyColumn: "id",
+                keyColumn: "Id",
                 keyValue: 40);
         }
     }

@@ -23,18 +23,19 @@ namespace HamsterWars.Server.Migrations
 
             modelBuilder.Entity("HamsterWars.Shared.Models.Hamster", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("FavFood")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Games")
                         .HasColumnType("int");
@@ -48,23 +49,25 @@ namespace HamsterWars.Server.Migrations
 
                     b.Property<string>("Loves")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Hamsters");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
+                            Id = 1,
                             Age = 4,
                             FavFood = "Cheese",
                             Games = 0,
@@ -76,7 +79,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 2,
+                            Id = 2,
                             Age = 50,
                             FavFood = "Meatballs",
                             Games = 0,
@@ -88,7 +91,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 3,
+                            Id = 3,
                             Age = 11,
                             FavFood = "Pizza",
                             Games = 0,
@@ -100,7 +103,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 4,
+                            Id = 4,
                             Age = 105,
                             FavFood = "Burrito",
                             Games = 0,
@@ -112,7 +115,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 5,
+                            Id = 5,
                             Age = 2,
                             FavFood = "Pancakes",
                             Games = 0,
@@ -124,7 +127,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 6,
+                            Id = 6,
                             Age = 6,
                             FavFood = "Cables",
                             Games = 0,
@@ -136,7 +139,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 7,
+                            Id = 7,
                             Age = 59,
                             FavFood = "Bananas",
                             Games = 0,
@@ -148,7 +151,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 8,
+                            Id = 8,
                             Age = 5000,
                             FavFood = "Magic Rabbits",
                             Games = 0,
@@ -160,7 +163,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 9,
+                            Id = 9,
                             Age = 30,
                             FavFood = "Coffee",
                             Games = 0,
@@ -172,7 +175,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 10,
+                            Id = 10,
                             Age = 9,
                             FavFood = "Sausage",
                             Games = 0,
@@ -184,7 +187,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 11,
+                            Id = 11,
                             Age = 1,
                             FavFood = "Tamato",
                             Games = 0,
@@ -196,7 +199,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 12,
+                            Id = 12,
                             Age = 13,
                             FavFood = "Beans",
                             Games = 0,
@@ -208,7 +211,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 13,
+                            Id = 13,
                             Age = 20,
                             FavFood = "Pineapple",
                             Games = 0,
@@ -220,7 +223,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 14,
+                            Id = 14,
                             Age = 666,
                             FavFood = "Human leftovers",
                             Games = 0,
@@ -232,7 +235,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 15,
+                            Id = 15,
                             Age = 21,
                             FavFood = "Beer",
                             Games = 0,
@@ -244,7 +247,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 16,
+                            Id = 16,
                             Age = 4,
                             FavFood = "Soup",
                             Games = 0,
@@ -256,7 +259,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 17,
+                            Id = 17,
                             Age = 12,
                             FavFood = "...",
                             Games = 0,
@@ -268,7 +271,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 18,
+                            Id = 18,
                             Age = 30,
                             FavFood = "COINS",
                             Games = 0,
@@ -280,7 +283,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 19,
+                            Id = 19,
                             Age = 4,
                             FavFood = "Cheeseballs",
                             Games = 0,
@@ -292,7 +295,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 20,
+                            Id = 20,
                             Age = 420,
                             FavFood = "Dutch stuff",
                             Games = 0,
@@ -304,7 +307,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 21,
+                            Id = 21,
                             Age = 3,
                             FavFood = "Wheat",
                             Games = 0,
@@ -316,7 +319,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 22,
+                            Id = 22,
                             Age = 5,
                             FavFood = "Candy",
                             Games = 0,
@@ -328,7 +331,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 23,
+                            Id = 23,
                             Age = 8,
                             FavFood = "Twinkies",
                             Games = 0,
@@ -340,7 +343,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 24,
+                            Id = 24,
                             Age = 5,
                             FavFood = "Grass",
                             Games = 0,
@@ -352,7 +355,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 25,
+                            Id = 25,
                             Age = 0,
                             FavFood = "?",
                             Games = 0,
@@ -364,7 +367,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 26,
+                            Id = 26,
                             Age = 1,
                             FavFood = "Hamstermilk",
                             Games = 0,
@@ -376,7 +379,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 27,
+                            Id = 27,
                             Age = 40,
                             FavFood = "Marshmellows",
                             Games = 0,
@@ -388,7 +391,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 28,
+                            Id = 28,
                             Age = 40,
                             FavFood = "Marshmellows",
                             Games = 0,
@@ -400,7 +403,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 29,
+                            Id = 29,
                             Age = 3,
                             FavFood = "Acid",
                             Games = 0,
@@ -412,7 +415,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 30,
+                            Id = 30,
                             Age = 0,
                             FavFood = "Poop",
                             Games = 0,
@@ -424,7 +427,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 31,
+                            Id = 31,
                             Age = 9,
                             FavFood = "Everything",
                             Games = 0,
@@ -436,7 +439,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 32,
+                            Id = 32,
                             Age = 40,
                             FavFood = "Pancakes",
                             Games = 0,
@@ -448,7 +451,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 33,
+                            Id = 33,
                             Age = 6000,
                             FavFood = "Sausages",
                             Games = 0,
@@ -460,7 +463,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 34,
+                            Id = 34,
                             Age = 1,
                             FavFood = "Ham",
                             Games = 0,
@@ -472,7 +475,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 35,
+                            Id = 35,
                             Age = 12,
                             FavFood = "Carrots",
                             Games = 0,
@@ -484,7 +487,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 36,
+                            Id = 36,
                             Age = 5,
                             FavFood = "Paper",
                             Games = 0,
@@ -496,7 +499,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 37,
+                            Id = 37,
                             Age = 6000,
                             FavFood = "Sausages",
                             Games = 0,
@@ -508,7 +511,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 38,
+                            Id = 38,
                             Age = 2,
                             FavFood = "Meat",
                             Games = 0,
@@ -520,7 +523,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 39,
+                            Id = 39,
                             Age = 30,
                             FavFood = "Chicken",
                             Games = 0,
@@ -532,7 +535,7 @@ namespace HamsterWars.Server.Migrations
                         },
                         new
                         {
-                            id = 40,
+                            Id = 40,
                             Age = 3,
                             FavFood = "Cheese",
                             Games = 0,

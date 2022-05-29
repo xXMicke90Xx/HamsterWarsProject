@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HamsterWars.Server.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    [Migration("20220524122116_Init")]
-    partial class Init
+    [Migration("20220527134330_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,18 +25,19 @@ namespace HamsterWars.Server.Migrations
 
             modelBuilder.Entity("HamsterWars.Shared.Models.Hamster", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<string>("FavFood")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Games")
                         .HasColumnType("int");
@@ -50,18 +51,34 @@ namespace HamsterWars.Server.Migrations
 
                     b.Property<string>("Loves")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("Wins")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Hamsters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 4,
+                            FavFood = "Cheese",
+                            Games = 0,
+                            ImgName = "hamster-1.jpg",
+                            Losses = 0,
+                            Loves = "Ball",
+                            Name = "McFuzz",
+                            Wins = 0
+                        });
                 });
 #pragma warning restore 612, 618
         }
