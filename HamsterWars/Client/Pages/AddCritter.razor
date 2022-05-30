@@ -31,11 +31,13 @@
           : "Failure - form was invalid";
     }
 
-    void ValidFormSubmitted(EditContext editContext)
+    async Task ValidFormSubmitted(EditContext editContext)
     {
 
-        client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
+        await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
         LastSubmitResult = "Hamster har blivit tillagd";
+
+        
 
     }
     void InvalidFormSubmitted(EditContext editContext)
