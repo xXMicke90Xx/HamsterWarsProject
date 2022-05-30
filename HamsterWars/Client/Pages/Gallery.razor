@@ -4,48 +4,73 @@
 @using Newtonsoft.Json
 
 <button @onclick="CreateCritter" type="button" class="btn btn-primary">Create Critter</button>
-@if(createCritter == true)
+@if (createCritter == true)
 {
     <AddCritter></AddCritter>
 }
+<style>
+    .hamsters:hover{
+        cursor:pointer;
+    }
+</style>
 
-@foreach (var animal in hamsters)
-{
-    
-    <div class="card">
-        <div class="card-header">
-            
-        </div>
-        <div class="card-img" style="height: 150px; width: 150px; float: left;">
-            <img style="position: relative; float: left; height: 150px; width: 150px;" src="/images/hamsters/@animal.ImgName.ToString()">
-        </div>
-        <div class="card-body">
-            <p>Name: @animal.Name </p>
-            <p>Age: @animal.Age</p>
-            <p>FavFood: @animal.FavFood</p>
-            <p>Loves: @animal.Loves</p>
-            <p>Wins: @animal.Wins</p>
-            <p>Losses: @animal.Losses</p>
-            <p>Games: @animal.Games</p>
-        </div>
-        <div>
-            <button class="btn btn-danger" @onclick="@(e => DeleteCritter(animal.Id))">Delete</button>           
-        </div>
+<div class="container-fluid ">
+    <div class="row col-12">
+        @foreach (var animal in hamsters)
+        {
+
+            <div class="card col-2">
+                <div class="card-header">
+                    <h5>@animal.Name </h5>
+                </div>
+                <div @onclick="ShowDetails" class="card-img hamsters" style="height: 350px; width: 100%; float: left;">
+                    @if (mouseOver == false)
+                    {
+                        <img style="position: relative; float: left; height: 100%; width: 100%;" src="/images/hamsters/@animal.ImgName.ToString()">
+                    }
+                    else
+                    {
+                        <div class="card-body">
+
+                            <p>Age: @animal.Age</p>
+                            <p>FavFood: @animal.FavFood</p>
+                            <p>Loves: @animal.Loves</p>
+                            <p>Wins: @animal.Wins</p>
+                            <p>Losses: @animal.Losses</p>
+                            <p>Games: @animal.Games</p>
+
+                        </div>
+                    
+                    <div>
+                        <button class="btn btn-danger" @onclick="@(e => DeleteCritter(animal.Id))">Delete</button>
+                    </div>
+                    }
+                </div>
+
+
+            </div>
+        }
     </div>
-}
+</div>
 
 
 
 @code {
+
+
+    Dictionary<int, bool> showDetails = new Dictionary<int, bool>();
+
     List<Hamster>? hamsters = new List<Hamster>();
     Hamster hamster;
-
+    bool mouseOver = false;
     bool createCritter = false;
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
             hamsters = await client.GetFromJsonAsync<List<Hamster>>("HamsterGallery/hamsters");
+            
         }
         catch (Exception ex)
         {
@@ -64,6 +89,22 @@
 
     async Task CreateCritter()
     {
-        createCritter = true;
+        if (createCritter == false)
+            createCritter = true;
+        else
+            createCritter = false;
     }
+
+    void ShowDetails()
+    {
+        if (mouseOver == false)
+        {
+            mouseOver = true;
+
+        }
+        
+        else
+            mouseOver = false;
+    }
+    
 }

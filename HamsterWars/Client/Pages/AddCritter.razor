@@ -35,12 +35,12 @@
     {
 
         client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
-        LastSubmitResult = "Hamster har blivit tillagt, uppdatera sidan!";
+        LastSubmitResult = "Hamster har blivit tillagd";
 
     }
     void InvalidFormSubmitted(EditContext editContext)
     {
-        LastSubmitResult = "Fel Info ";
+        LastSubmitResult = "Fel Info";
     }
 
     

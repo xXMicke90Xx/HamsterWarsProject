@@ -13,16 +13,19 @@ namespace HamsterWars.Shared.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(40)]       
+        [MaxLength(40)] 
+        [MinLength(2)]
         public string Name { get; set; } = String.Empty;
         [Required]
         
         public int Age { get; set; } = 0;
         [Required]
         [MaxLength(40)]
+        [MinLength(2)]
         public string FavFood { get; set; } = String.Empty;
         [Required]
         [MaxLength(40)]
+        [MinLength(2)]
         public string Loves { get; set; } = String.Empty;
         
         public string ImgName { get; set; } = String.Empty;
