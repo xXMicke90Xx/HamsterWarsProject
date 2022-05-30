@@ -31,7 +31,7 @@ namespace HamsterWars.Server.Controllers
         {
             List<Hamster> hamsters = context.Hamsters.ToList();
             Random random = new Random();           
-            return hamsters[random.Next(0, hamsters.Count()+1)];
+            return hamsters[random.Next(0, hamsters.Count())];
         }
 
         // GET api/<HamsterController>/5
@@ -57,7 +57,7 @@ namespace HamsterWars.Server.Controllers
         {
 
             //INTE KLAR
-            var findHamster = context.Hamsters.Find(Id);
+            var findHamster = context.Hamsters.Find(request.Id);
             //var findHamsterA = context.Hamsters.Find(x => x.id == Id);
             if (findHamster == null)
                 return BadRequest("Hamster not found");
@@ -67,7 +67,8 @@ namespace HamsterWars.Server.Controllers
             findHamster.Games = request.Games;
             findHamster.Wins = request.Wins;
             findHamster.Losses = request.Losses;
-
+            context.Update(findHamster);
+            context.SaveChanges();
              return Ok(request);
         }
 
