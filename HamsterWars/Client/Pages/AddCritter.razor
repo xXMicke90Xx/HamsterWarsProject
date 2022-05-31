@@ -9,11 +9,18 @@
 <EditForm method="post" Model=@hamster OnValidSubmit=@ValidFormSubmitted OnInvalidSubmit=@InvalidFormSubmitted class="my-3">
     <div class="my-3">
         <DataAnnotationsValidator />
+
         <input @bind-value="@hamster.Name" type="text" placeholder="Name" />
         <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
         <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
-        
+        @*        <input @bind-value="@hamster.ImgName" type="file" name="hamster" method = "post" enctype="form-data">*@
+        <div class="form-control-file">
+            <p>
+                <button onclick="document.getElementById('tt').click()">Pick</button>
+                <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
+            </p>
+        </div>
     </div>
     <button class="btn btn-primary" type="submit" value="Save">Submit</button>
 </EditForm>
@@ -37,7 +44,7 @@
         await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
         LastSubmitResult = "Hamster har blivit tillagd";
 
-        
+
 
     }
     void InvalidFormSubmitted(EditContext editContext)
@@ -45,7 +52,7 @@
         LastSubmitResult = "Fel Info";
     }
 
-    
+
 
 }
 
