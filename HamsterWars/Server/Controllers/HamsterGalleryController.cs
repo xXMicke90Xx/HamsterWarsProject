@@ -7,6 +7,7 @@ namespace HamsterWars.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class HamsterGalleryController : ControllerBase
     {
         private readonly HamsterDBContext context;
@@ -19,7 +20,7 @@ namespace HamsterWars.Server.Controllers
 
         // GET: api/<HamsterController>
         [HttpGet("hamsters")]
-        
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<Hamster>>> Get()
         {
             List<Hamster> hamsters = await context.Hamsters.ToListAsync();
@@ -31,6 +32,7 @@ namespace HamsterWars.Server.Controllers
                
         }
         [HttpGet("hamsters/random")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Hamster>> GetRandom()
         {
             List<Hamster> hamsters = await context.Hamsters.ToListAsync();
@@ -44,22 +46,24 @@ namespace HamsterWars.Server.Controllers
 
         // GET api/<HamsterController>/5
         [HttpGet("hamsters/{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<Hamster>> GetOne(int id)
         {
             try
             {
                 Hamster hamster = await context.Hamsters.FindAsync(id);
-                if (hamster == null) return BadRequest("No Hamster Found!");
+                if (hamster == null) return NotFound("No Hamster Found!");
                 return Ok(hamster);
             }
             catch (Exception ex)
             {
-               return NotFound(ex.Message + "Fann inte objektet");
+               return BadRequest(ex.Message + "Fann inte objektet");
             }
         }
 
         // POST api/<HamsterController>
         [HttpPost]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<List<Hamster>>> AddHamster([FromBody] Hamster hamster)
         {
             try
@@ -76,6 +80,7 @@ namespace HamsterWars.Server.Controllers
 
         // PUT api/<HamsterController>/5
         [HttpPut("hamsters/{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult<List<Hamster>>> UpdateHamster(int Id, [FromBody] Hamster request)
         {
             try
@@ -102,6 +107,7 @@ namespace HamsterWars.Server.Controllers
 
         // DELETE api/<HamsterController>/5
         [HttpDelete("hamsters/{id}")]
+        [MapToApiVersion("1.0")]
         public async Task<ActionResult> Delete(int id)
         {
             try

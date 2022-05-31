@@ -1,6 +1,7 @@
 ﻿@using HamsterWars.Shared.Models
 @using System.Net.Http.Headers
 @inject HttpClient client
+@using HamsterWars.Client.Pages
 
 <h2>
     @LastSubmitResult
@@ -14,20 +15,21 @@
         <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
         <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
-        @*        <input @bind-value="@hamster.ImgName" type="file" name="hamster" method = "post" enctype="form-data">*@
-        <div class="form-control-file">
-            <p>
-                <button onclick="document.getElementById('tt').click()">Pick</button>
-                <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
-            </p>
-        </div>
+        <p>
+        <button onclick="document.getElementById('tt').click()">Pick</button>
+        <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
+        </p>
+        
     </div>
+
+
     <button class="btn btn-primary" type="submit" value="Save">Submit</button>
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
 
     string LastSubmitResult;
+    public EventCallback UpdateAgain { get; set; }
 
     void FormSubmitted(EditContext editContext)
     {
@@ -44,7 +46,7 @@
         await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
         LastSubmitResult = "Hamster har blivit tillagd";
 
-
+        Gallery.Changed = true;
 
     }
     void InvalidFormSubmitted(EditContext editContext)
@@ -52,7 +54,10 @@
         LastSubmitResult = "Fel Info";
     }
 
-
+    async Task Test(InputFileChangeEventArgs e)
+    {
+        string t = "g";
+    }
 
 }
 
