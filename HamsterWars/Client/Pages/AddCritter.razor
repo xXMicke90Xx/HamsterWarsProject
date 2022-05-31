@@ -4,6 +4,11 @@
 @inject HttpClient client
 @inject IFileReaderService fileReader;
 @using HamsterWars.Client.Pages
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+
+
+
+
 
 <h2>
     @LastSubmitResult
@@ -31,6 +36,7 @@
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
+
 
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
@@ -95,7 +101,7 @@
         LastSubmitResult = "Fel Info";
     }
 
-    async Task Test(InputFileChangeEventArgs e)
+    async Task FileUpload(InputFileChangeEventArgs e)
     {
         var format = "image/png";
         var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);

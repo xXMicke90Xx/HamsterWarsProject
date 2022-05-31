@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HamsterWars.Server.Migrations
+namespace DataAccess.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
     partial class HamsterDBContextModelSnapshot : ModelSnapshot

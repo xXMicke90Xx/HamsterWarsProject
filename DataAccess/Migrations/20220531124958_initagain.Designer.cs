@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace HamsterWars.Server.Migrations
+namespace DataAccess.Migrations
 {
     [DbContext(typeof(HamsterDBContext))]
-    [Migration("20220527135639_changes")]
-    partial class changes
+    [Migration("20220531124958_initagain")]
+    partial class initagain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
