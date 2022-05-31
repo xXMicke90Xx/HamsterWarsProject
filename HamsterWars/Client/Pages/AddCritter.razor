@@ -2,6 +2,11 @@
 @using System.Net.Http.Headers
 @inject HttpClient client
 @using HamsterWars.Client.Pages
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+
+
+
+
 
 <h2>
     @LastSubmitResult
@@ -14,11 +19,9 @@
         <input @bind-value="@hamster.Name" type="text" placeholder="Name" />
         <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
-        <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
-        <p>
-        <button onclick="document.getElementById('tt').click()">Pick</button>
-        <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
-        </p>
+        <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />       
+        <InputFile OnChange="@FileUpload">Upload</InputFile>
+        
         
     </div>
 
@@ -27,6 +30,7 @@
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
+
 
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
@@ -54,9 +58,15 @@
         LastSubmitResult = "Fel Info";
     }
 
-    async Task Test(InputFileChangeEventArgs e)
+    async Task FileUpload(InputFileChangeEventArgs e)
     {
-        string t = "g";
+        
+        var format = "image/png";
+        var file = await e.File.RequestImageFileAsync("image/png", 1000, 1000);
+        string s = System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "images", "hamsters", e.File.Name.Trim());
+
+        
+
     }
 
 }
