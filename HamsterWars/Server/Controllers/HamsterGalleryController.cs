@@ -2,6 +2,8 @@
 using HamsterWars.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 namespace HamsterWars.Server.Controllers
 {
@@ -12,8 +14,11 @@ namespace HamsterWars.Server.Controllers
     {
         private readonly HamsterDBContext context;
 
-        public HamsterGalleryController(HamsterDBContext context)
+        public IWebHostEnvironment _he { get; }
+
+        public HamsterGalleryController(IWebHostEnvironment he, HamsterDBContext context)
         {
+            _he = he;
             this.context = context;
         }
 
@@ -60,7 +65,7 @@ namespace HamsterWars.Server.Controllers
                return BadRequest(ex.Message + "Fann inte objektet");
             }
         }
-
+        
         // POST api/<HamsterController>
         [HttpPost]
         [MapToApiVersion("1.0")]
@@ -77,7 +82,68 @@ namespace HamsterWars.Server.Controllers
                 return BadRequest(ex.Message + "Somthing Wrong!");
             }
         }
+        [HttpPost("hamster/newimage")]
+        public string PreliminaryImage()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+             
+                if (file.Length > 0)
+                {
+                                      
+                    return file.FileName.Trim();
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Internal server error";
+            }
+        }
 
+
+
+
+
+        [HttpPost("hamster/image")]        
+        public string AddHamsterImage()
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("wwwroot", "images", "hamsters");
+                var pathToSave = Path.Combine(_he.ContentRootPath, folderName);
+                
+                Regex ex = new Regex(@"Server");
+
+                var t = ex.Replace(pathToSave, "Client");
+                pathToSave = t;
+
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return file.FileName.Trim();
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Internal server error";
+            }
+        }
         // PUT api/<HamsterController>/5
         [HttpPut("hamsters/{id}")]
         [MapToApiVersion("1.0")]
@@ -117,6 +183,28 @@ namespace HamsterWars.Server.Controllers
                 {
                     context.Hamsters.Remove(hamster);
                     await context.SaveChangesAsync();
+
+                    var folderName = Path.Combine("wwwroot", "images", "hamsters");
+                    var pathToSave = Path.Combine(_he.ContentRootPath, folderName);
+
+                    Regex ex = new Regex(@"Server");
+
+                    var t = ex.Replace(pathToSave, "Client");
+                    pathToSave = t;
+
+
+                    var fileName = hamster.ImgName;
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    if (System.IO.File.Exists(fullPath))
+
+                    {
+
+                        System.IO.File.Delete(fullPath);
+
+                    }
+
+
                     return Ok();
                 }
                 return NotFound();

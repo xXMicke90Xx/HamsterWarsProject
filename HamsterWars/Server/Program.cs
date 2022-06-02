@@ -1,6 +1,8 @@
 using HamsterWars.Server.DataBase;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using Tewr.Blazor.FileReader;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,7 @@ builder.Services.AddApiVersioning(config => {
 });
 builder.Services.AddDbContext<HamsterDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
 var app = builder.Build();
 

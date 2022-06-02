@@ -1,4 +1,5 @@
-﻿@using HamsterWars.Shared.Models
+﻿@using HamsterWars.Shared.Interfaces
+@using HamsterWars.Shared.Models
 @using System.Net.Http.Headers
 @using Tewr.Blazor.FileReader
 @inject HttpClient client
@@ -23,21 +24,12 @@
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
         <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
 
+        <input id="ImageInput" type="file" @ref="_input" @onchange="HamsterName" accept=".jpg, .jpeg, .png" />
         
-        <form method="post" enctype="multipart/form-data" asp-controller="FileUploads" asp-action="Index" >
-            <span>Select File:</span>
-            <input type="file" name="postedFiles" @bind-value="@hamster.ImgName"/>
-        </form>
 
- @*       <input type="file" @ref="elementReference" @onchange="async () => await OpenFileAsync()"/>
-        <p>
-        <button onclick="document.getElementById('tt').click()">Pick</button>
-        <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
-        </p>*@
-        
+
+
     </div>
-
-    @*@onclick="async () => await UploadFileAsync()"*@
     <button class="btn btn-primary" type="submit" value="Save">Submit</button>
 </EditForm>
 @code {
@@ -46,60 +38,18 @@
 
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
+    IBrowserFile myFile;
 
-    //ElementReference elementReference;
-    //string message = string.Empty;
-    //string imagePath = string.Empty;
 
-    //string fileName = string.Empty;
-    //string type = string.Empty;
-    //string size = string.Empty;
-
-    //Stream fileStream = null;
-
-    //async Task OpenFileAsync()
-    //{
-    //    var file = (await fileReader.CreateReference(elementReference).EnumerateFilesAsync()).FirstOrDefault();
-    //    if (file == null) return;
-
-    //    var fileInfo = await file.ReadFileInfoAsync();
-    //    fileName = fileInfo.Name;
-    //    type = fileInfo.Type;
-    //    hamster.ImgName = fileName;
-
-    //    using (var memoryStream = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
-    //    {
-    //        fileStream = new MemoryStream(memoryStream.ToArray());
-    //    }
-    //}
-
-    //async Task UploadFileAsync()
-    //{
-    //    string url = "";
-
-    //    var content = new MultipartFormDataContent();
-    //    content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form data");
-
-    //    content.Add(new StreamContent(fileStream, (int)fileStream.Length), "image", fileName);
-
-    //    var response = await client.PostAsync($"{url}/api/FileUploads", content);
-    //    message = "Upload Success";
-    //}
-    void FormSubmitted(EditContext editContext)
-    {
-        bool formIsValid = editContext.Validate();
-        LastSubmitResult =
-          formIsValid
-          ? "Success - form was valid"
-          : "Failure - form was invalid";
-    }
     async Task ValidFormSubmitted(EditContext editContext)
     {
 
         await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
+        HandleSelected();
         LastSubmitResult = "Hamster har blivit tillagd";
-
         Gallery.Changed = true;
+        OnChange.InvokeAsync(ImgUrl);
+
 
     }
     void InvalidFormSubmitted(EditContext editContext)
@@ -107,17 +57,111 @@
         LastSubmitResult = "Fel Info";
     }
 
-    //async Task FileUpload(InputFileChangeEventArgs e)
-    //{
-    //    var format = "image/png";
-    //    var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
-    //    var buffer = new byte[resizedImage.Size];
-    //    await resizedImage.OpenReadStream().ReadAsync(buffer);
-    //    var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
-    //    hamster.ImgName = imageData;
-    //}
+    async Task HamsterName()
+    {
+        foreach (var file in await fileReader.CreateReference(_input).EnumerateFilesAsync())
+        {
+            if (file != null)
+            {
+                var fileInfo = await file.ReadFileInfoAsync();
+                using (var ms = await file.CreateMemoryStreamAsync(4 * 1024))
+                {
+                    var content = new MultipartFormDataContent();
+                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+                    content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
+                    ImgUrl = await UpdateImageName(content);                    
+                    await OnChange.InvokeAsync(ImgUrl);
+                    hamster.ImgName = ImgUrl;
 
-}
+                }
+            }
+        }
+    }
+
+    protected async Task HandleSelected()
+    {
+        foreach (var file in await fileReader.CreateReference(_input).EnumerateFilesAsync())
+        {
+            if (file != null)
+            {
+                var fileInfo = await file.ReadFileInfoAsync();
+                using (var ms = await file.CreateMemoryStreamAsync(4 * 1024))
+                {
+                    var content = new MultipartFormDataContent();
+                    content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+                    content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
+                    ImgUrl = await UploadProductImage(content);                    
+                    await OnChange.InvokeAsync(ImgUrl);
+                    
+                }
+            }
+        }
+    }
+
+    public async Task<string> UpdateImageName(MultipartFormDataContent content)
+    {
+        
+        var postResult = await client.PostAsync("HamsterGallery/hamster/newimage", content);
+        var postContent = await postResult.Content.ReadAsStringAsync();
+        if (!postResult.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(postContent);
+        }
+        else
+        {
+
+            return postContent;
+        }
+    }
+
+
+    public async Task<string> UploadProductImage(MultipartFormDataContent content)
+    {
+        
+        var postResult = await client.PostAsync("HamsterGallery/hamster/image", content);
+        var postContent = await postResult.Content.ReadAsStringAsync();
+        if (!postResult.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(postContent);
+        }
+        else
+        {
+
+            return postContent;
+        }
+    }
+
+
+    private ElementReference _input;
+
+    public string ImgUrl { get; set; }
+
+    public EventCallback<string> OnChange { get; set; }
+
+    public IFileReaderService FileReaderService { get; set; }
+
+
+
+
+
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

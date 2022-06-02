@@ -27,7 +27,7 @@ namespace HamsterWars.Shared.Models
         [MaxLength(40)]
         [MinLength(2)]
         public string Loves { get; set; } = String.Empty;
-        
+        [Required]
         public string ImgName { get; set; } = String.Empty;
         
         public int Wins { get; set; } = 0;
