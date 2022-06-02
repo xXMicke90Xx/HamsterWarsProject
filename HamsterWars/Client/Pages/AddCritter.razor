@@ -22,14 +22,23 @@
         <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
         <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
-        <input type="file" @ref="elementReference" @onchange="async () => await OpenFileAsync()" />       
-        <InputFile id="tt" OnChange="@FileUpload" hidden ></InputFile>
-       
+
+        
+        <form method="post" enctype="multipart/form-data" asp-controller="FileUploads" asp-action="Index" >
+            <span>Select File:</span>
+            <input type="file" name="postedFiles" @bind-value="@hamster.ImgName"/>
+        </form>
+
+ @*       <input type="file" @ref="elementReference" @onchange="async () => await OpenFileAsync()"/>
+        <p>
+        <button onclick="document.getElementById('tt').click()">Pick</button>
+        <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
+        </p>*@
         
     </div>
 
-
-    <button class="btn btn-primary" @onclick="async () => await UploadFileAsync()" type="submit" value="Save">Submit</button>
+    @*@onclick="async () => await UploadFileAsync()"*@
+    <button class="btn btn-primary" type="submit" value="Save">Submit</button>
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
@@ -38,43 +47,44 @@
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
 
-    ElementReference elementReference;
-    string message = string.Empty;
-    string imagePath = string.Empty;
+    //ElementReference elementReference;
+    //string message = string.Empty;
+    //string imagePath = string.Empty;
 
-    string fileName = string.Empty;
-    string type = string.Empty;
-    string size = string.Empty;
+    //string fileName = string.Empty;
+    //string type = string.Empty;
+    //string size = string.Empty;
 
-    Stream fileStream = null;
+    //Stream fileStream = null;
 
-    async Task OpenFileAsync()
-    {
-        var file = (await fileReader.CreateReference(elementReference).EnumerateFilesAsync()).FirstOrDefault();
-        if (file == null) return;
+    //async Task OpenFileAsync()
+    //{
+    //    var file = (await fileReader.CreateReference(elementReference).EnumerateFilesAsync()).FirstOrDefault();
+    //    if (file == null) return;
 
-        var fileInfo = await file.ReadFileInfoAsync();
-        fileName = fileInfo.Name;
-        type = fileInfo.Type;
-        hamster.ImgName = fileName;
+    //    var fileInfo = await file.ReadFileInfoAsync();
+    //    fileName = fileInfo.Name;
+    //    type = fileInfo.Type;
+    //    hamster.ImgName = fileName;
 
-        using (var memoryStream = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
-        {
-            fileStream = new MemoryStream(memoryStream.ToArray());
-        }
-    }
-    async Task UploadFileAsync()
-    {
-        string url = "";
+    //    using (var memoryStream = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
+    //    {
+    //        fileStream = new MemoryStream(memoryStream.ToArray());
+    //    }
+    //}
 
-        var content = new MultipartFormDataContent();
-        content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form data");
+    //async Task UploadFileAsync()
+    //{
+    //    string url = "";
 
-        content.Add(new StreamContent(fileStream, (int)fileStream.Length), "image", fileName);
+    //    var content = new MultipartFormDataContent();
+    //    content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form data");
 
-        var response = await client.PostAsync($"{url}/api/FileUploads", content);
-        message = "Upload Success";
-    }
+    //    content.Add(new StreamContent(fileStream, (int)fileStream.Length), "image", fileName);
+
+    //    var response = await client.PostAsync($"{url}/api/FileUploads", content);
+    //    message = "Upload Success";
+    //}
     void FormSubmitted(EditContext editContext)
     {
         bool formIsValid = editContext.Validate();
@@ -83,7 +93,6 @@
           ? "Success - form was valid"
           : "Failure - form was invalid";
     }
-
     async Task ValidFormSubmitted(EditContext editContext)
     {
 
@@ -98,15 +107,15 @@
         LastSubmitResult = "Fel Info";
     }
 
-    async Task FileUpload(InputFileChangeEventArgs e)
-    {
-        var format = "image/png";
-        var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
-        var buffer = new byte[resizedImage.Size];
-        await resizedImage.OpenReadStream().ReadAsync(buffer);
-        var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
-        hamster.ImgName = imageData;
-    }
+    //async Task FileUpload(InputFileChangeEventArgs e)
+    //{
+    //    var format = "image/png";
+    //    var resizedImage = await e.File.RequestImageFileAsync(format, 300, 300);
+    //    var buffer = new byte[resizedImage.Size];
+    //    await resizedImage.OpenReadStream().ReadAsync(buffer);
+    //    var imageData = $"data:{format};base64,{Convert.ToBase64String(buffer)}";
+    //    hamster.ImgName = imageData;
+    //}
 
 }
 
