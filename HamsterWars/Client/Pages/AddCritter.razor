@@ -22,12 +22,9 @@
         <input @bind-value="@hamster.Age" type="number" placeholder="Age" />
         <input @bind-value="@hamster.FavFood" type="text" placeholder="FavFood" />
         <input @bind-value="@hamster.Loves" type="text" placeholder="Loves" />
-        <input type="file" @ref="elementReference" @onchange="async () => await OpenFileAsync()" />
-
-        @*<p>
-        <button onclick="document.getElementById('tt').click()">Pick</button>
-        <InputFile id="tt" OnChange="@Test" hidden multiple></InputFile>
-        </p>*@
+        <input type="file" @ref="elementReference" @onchange="async () => await OpenFileAsync()" />       
+        <InputFile id="tt" OnChange="@FileUpload" hidden ></InputFile>
+       
         
     </div>
 
