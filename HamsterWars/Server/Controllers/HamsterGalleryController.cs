@@ -56,7 +56,7 @@ namespace HamsterWars.Server.Controllers
         {
             try
             {
-                Hamster hamster = await context.Hamsters.FindAsync(id);
+                Hamster? hamster = await context.Hamsters.FindAsync(id);
                 if (hamster == null) return NotFound("No Hamster Found!");
                 return Ok(hamster);
             }
@@ -73,8 +73,8 @@ namespace HamsterWars.Server.Controllers
         {
             try
             {
-                context.Add(hamster);
-                context.SaveChanges();
+                await context.AddAsync(hamster);
+                await context.SaveChangesAsync();
                 return Created("HamsterGallery", hamster);
             }
             catch (Exception ex)
@@ -90,8 +90,7 @@ namespace HamsterWars.Server.Controllers
                 var file = Request.Form.Files[0];
              
                 if (file.Length > 0)
-                {
-                                      
+                {                                     
                     return file.FileName.Trim();
                 }
                 else
@@ -101,13 +100,9 @@ namespace HamsterWars.Server.Controllers
             }
             catch (Exception ex)
             {
-                return "Internal server error";
+                return "Internal server error" + ex;
             }
         }
-
-
-
-
 
         [HttpPost("hamster/image")]        
         public string AddHamsterImage()

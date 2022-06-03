@@ -1,15 +1,10 @@
-﻿
-@using HamsterWars.Shared.Models
+﻿@using HamsterWars.Shared.Models
 @using System.Net.Http.Headers
 @using Tewr.Blazor.FileReader
 @inject HttpClient client
 @inject IFileReaderService fileReader;
 @using HamsterWars.Client.Pages
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
-
-
-
-
 
 <h2>
     @LastSubmitResult
@@ -26,9 +21,6 @@
 
         <input id="ImageInput" type="file" @ref="_input" @onchange="HamsterName" accept=".jpg, .jpeg, .png" />
         
-
-
-
     </div>
     @if(Gallery.Changed == true)
     {
@@ -38,27 +30,29 @@
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
-
-
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
-    IBrowserFile myFile;
+   
+    private ElementReference _input;
 
+    public string ImgUrl { get; set; }
+
+    public EventCallback<string> OnChange { get; set; }
+
+    public IFileReaderService FileReaderService { get; set; }
 
     async Task ValidFormSubmitted(EditContext editContext)
     {
-
         await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
         HandleSelected();
         LastSubmitResult = "Hamster har blivit tillagd";
         Gallery.Changed = true;
         await OnInitializedAsync();
-
-
     }
+
     void InvalidFormSubmitted(EditContext editContext)
     {
-        LastSubmitResult = "Fel Info";
+        LastSubmitResult = "Något gick fel, kontrollera att alla fälten är ifyllda";
     }
 
     async Task HamsterName()
@@ -94,7 +88,7 @@
                     var content = new MultipartFormDataContent();
                     content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
                     content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
-                    ImgUrl = await UploadProductImage(content);                    
+                    ImgUrl = await UploadHamsterImage(content);                    
                     await OnChange.InvokeAsync(ImgUrl);
                     
                 }
@@ -119,7 +113,7 @@
     }
 
 
-    public async Task<string> UploadProductImage(MultipartFormDataContent content)
+    public async Task<string> UploadHamsterImage(MultipartFormDataContent content)
     {
         
         var postResult = await client.PostAsync("HamsterGallery/hamster/image", content);
@@ -135,21 +129,7 @@
         }
     }
 
-
-    private ElementReference _input;
-
-    public string ImgUrl { get; set; }
-
-    public EventCallback<string> OnChange { get; set; }
-
-    public IFileReaderService FileReaderService { get; set; }
-
-
-
-
-
-
-   }
+}
 
 
 
