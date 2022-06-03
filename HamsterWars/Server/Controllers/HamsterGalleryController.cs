@@ -147,7 +147,6 @@ namespace HamsterWars.Server.Controllers
             try
             {
                 var findHamster = context.Hamsters.Find(request.Id);
-                //var findHamsterA = context.Hamsters.Find(x => x.id == Id);
                 if (findHamster == null)
                     return BadRequest("Hamster not found");
                 findHamster.Name = request.Name;
