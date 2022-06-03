@@ -6,6 +6,7 @@
 @using HamsterWars.Client.Pages
 @using Microsoft.AspNetCore.Components.WebAssembly.Hosting
 
+
 <h2>
     @LastSubmitResult
 </h2>
@@ -30,32 +31,30 @@
 </EditForm>
 @code {
     Hamster hamster = new Hamster();
+
+
     string LastSubmitResult;
     public EventCallback UpdateAgain { get; set; }
-   
-    private ElementReference _input;
+    IBrowserFile myFile;
 
-    public string ImgUrl { get; set; }
 
-    public EventCallback<string> OnChange { get; set; }
-
-    public IFileReaderService FileReaderService { get; set; }
-
-    async Task ValidFormSubmitted(EditContext editContext)
+    async Task ValidFormSubmitted(EditContext editContext) //Valdering av all inkommande data
     {
+
         await client.PostAsJsonAsync<Hamster>("HamsterGallery", hamster);
         HandleSelected();
         LastSubmitResult = "Hamster har blivit tillagd";
         Gallery.Changed = true;
         await OnInitializedAsync();
-    }
 
+
+    }
     void InvalidFormSubmitted(EditContext editContext)
     {
-        LastSubmitResult = "Något gick fel, kontrollera att alla fälten är ifyllda";
+        LastSubmitResult = "Fel Info";
     }
 
-    async Task HamsterName()
+    async Task HamsterName() //Sätter ImgName till bildens namn så databasen känner igen vilken bild som ska användas
     {
         foreach (var file in await fileReader.CreateReference(_input).EnumerateFilesAsync())
         {
@@ -76,7 +75,7 @@
         }
     }
 
-    protected async Task HandleSelected()
+    protected async Task HandleSelected() //Lägger till uppladdad bild till wwwroot
     {
         foreach (var file in await fileReader.CreateReference(_input).EnumerateFilesAsync())
         {
@@ -88,7 +87,7 @@
                     var content = new MultipartFormDataContent();
                     content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
                     content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
-                    ImgUrl = await UploadHamsterImage(content);                    
+                    ImgUrl = await UploadProductImage(content);                    
                     await OnChange.InvokeAsync(ImgUrl);
                     
                 }
@@ -96,7 +95,7 @@
         }
     }
 
-    public async Task<string> UpdateImageName(MultipartFormDataContent content)
+    public async Task<string> UpdateImageName(MultipartFormDataContent content) //Uppdaterar bildens namn efter konverteringar
     {
         
         var postResult = await client.PostAsync("HamsterGallery/hamster/newimage", content);
@@ -113,7 +112,7 @@
     }
 
 
-    public async Task<string> UploadHamsterImage(MultipartFormDataContent content)
+    public async Task<string> UploadProductImage(MultipartFormDataContent content) 
     {
         
         var postResult = await client.PostAsync("HamsterGallery/hamster/image", content);
@@ -129,7 +128,21 @@
         }
     }
 
-}
+
+    private ElementReference _input;
+
+    public string ImgUrl { get; set; }
+
+    public EventCallback<string> OnChange { get; set; }
+
+    public IFileReaderService FileReaderService { get; set; }
+
+
+
+
+
+
+   }
 
 
 
