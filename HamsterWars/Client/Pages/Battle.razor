@@ -73,6 +73,7 @@
         try
         {
             hamster1 = await client.GetFromJsonAsync<Hamster>("HamsterGallery/hamsters/random");
+           
             do
             {
                 hamster2 = await client.GetFromJsonAsync<Hamster>("HamsterGallery/hamsters/random");

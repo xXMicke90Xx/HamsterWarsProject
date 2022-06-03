@@ -1,4 +1,4 @@
-﻿@using HamsterWars.Shared.Interfaces
+﻿
 @using HamsterWars.Shared.Models
 @using System.Net.Http.Headers
 @using Tewr.Blazor.FileReader
@@ -30,6 +30,10 @@
 
 
     </div>
+    @if(Gallery.Changed == true)
+    {
+        <p>Uppdatera sidan</p>
+    }
     <button class="btn btn-primary" type="submit" value="Save">Submit</button>
 </EditForm>
 @code {
@@ -48,7 +52,7 @@
         HandleSelected();
         LastSubmitResult = "Hamster har blivit tillagd";
         Gallery.Changed = true;
-        OnChange.InvokeAsync(ImgUrl);
+        
 
 
     }
