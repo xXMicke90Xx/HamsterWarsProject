@@ -6,60 +6,60 @@
 
     <div class="container col-12">
         <div class="row">
-            
-                <div class="card col-6 ">
-                    <div class="card-header">                       
-                        <h3>@hamster1.Name </h3>
+
+            <div class="card col-6 ">
+                <div class="card-header">
+                    <h3>@hamster1.Name </h3>
                     @if (playerPressed)
                     {
                         <h4>Wins: @hamster1.Wins</h4>
                         <h4>Losses: @hamster1.Losses</h4>
                     }
                 </div>
-                    <div class="card-img" style="display: -webkit-inline-box; max-height: 250px; max-width: 250px; margin: auto">
-                       <button @onclick=@(e => ClickedCutest(hamster1.Id))> <img style="position: relative; float: left; max-height: 250px; max-width: 250px;" src="/images/hamsters/@hamster1.ImgName.ToString()"></button>
-                    </div>
-                    <div class="card-body">
+                <div class="card-img" style="display: -webkit-inline-box; max-height: 250px; max-width: 250px; margin: auto">
+                    <button @onclick=@(e => ClickedCutest(hamster1.Id))> <img style="position: relative; float: left; max-height: 250px; max-width: 250px;" src="/images/hamsters/@hamster1.ImgName.ToString()"></button>
+                </div>
+                <div class="card-body">
 
-                        <p>Age: @hamster1.Age</p>
-                        <p>FavFood: @hamster1.FavFood</p>
-                        <p>Loves: @hamster1.Loves</p>
-
-                    </div>
+                    <p>Age: @hamster1.Age</p>
+                    <p>FavFood: @hamster1.FavFood</p>
+                    <p>Loves: @hamster1.Loves</p>
 
                 </div>
-                      
-                <div class="card col-6">
-                    <div class="card-header">
-                        <h3>@hamster2.Name </h3>
-                        @if (playerPressed)
+
+            </div>
+
+            <div class="card col-6">
+                <div class="card-header">
+                    <h3>@hamster2.Name </h3>
+                    @if (playerPressed)
                     {
                         <h4>Wins: @hamster2.Wins</h4>
                         <h4>Losses: @hamster2.Losses</h4>
                     }
-                    </div>
-                    <div class="card-img" style="display: -webkit-inline-box; max-height: 250px; max-width: 250px; margin: auto">
-                      <button @onclick=@(e => ClickedCutest(hamster2.Id))>   <img style="position: relative; float: left; max-height: 250px; max-width: 250px;" src="/images/hamsters/@hamster2.ImgName.ToString()"></button>
-                    </div>
-                    <div class="card-body">
+                </div>
+                <div class="card-img" style="display: -webkit-inline-box; max-height: 250px; max-width: 250px; margin: auto">
+                    <button @onclick=@(e => ClickedCutest(hamster2.Id))>   <img style="position: relative; float: left; max-height: 250px; max-width: 250px;" src="/images/hamsters/@hamster2.ImgName.ToString()"></button>
+                </div>
+                <div class="card-body">
 
-                        <p>Age: @hamster2.Age</p>
-                        <p>FavFood: @hamster2.FavFood</p>
-                        <p>Loves: @hamster2.Loves</p>
-
-                    </div>
+                    <p>Age: @hamster2.Age</p>
+                    <p>FavFood: @hamster2.FavFood</p>
+                    <p>Loves: @hamster2.Loves</p>
 
                 </div>
-            
+
+            </div>
+
         </div>
     </div>
     @if (playerPressed)
     {
         <div class="container">
             <div class="row">
-            <button class="btn btn-danger" @onclick=@OnInitializedAsync>Next Battle</button>
+                <button class="btn btn-danger" @onclick=@OnInitializedAsync>Next Battle</button>
+            </div>
         </div>
-    </div>
     }
 }
 else
@@ -70,18 +70,20 @@ else
     Hamster hamster1;
     Hamster hamster2;
     bool playerPressed = false;
+    public bool HasChosen { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             hamster1 = await client.GetFromJsonAsync<Hamster>("HamsterGallery/hamsters/random");
-           
+
             do
             {
                 hamster2 = await client.GetFromJsonAsync<Hamster>("HamsterGallery/hamsters/random");
             } while (hamster1.Id == hamster2.Id);
             playerPressed = false;
+            HasChosen = false;
         }
         catch (Exception ex)
         {
@@ -92,31 +94,36 @@ else
 
     async Task ClickedCutest(int id)
     {
-        if (hamster1.Id == id)
+
+
+        if (!HasChosen)
         {
-            hamster1.Wins++;
-            hamster2.Losses++;
-            hamster1.Games++;
-            hamster2.Games++;
+            HasChosen = true;
+            if (hamster1.Id == id)
+            {
+                hamster1.Wins++;
+                hamster2.Losses++;
+                hamster1.Games++;
+                hamster2.Games++;
 
-            await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster1);
-            await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster2);
-            playerPressed = true;
+                await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster1);
+                await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster2);
+                playerPressed = true;
 
 
+            }
+            else
+            {
+                hamster2.Wins++;
+                hamster1.Losses++;
+                hamster2.Games++;
+                hamster1.Games++;
+                await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster2);
+                await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster1);
+
+                playerPressed = true;
+            }
         }
-        else
-        {
-            hamster2.Wins++;
-            hamster1.Losses++;
-            hamster2.Games++;
-            hamster1.Games++;
-            await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster2);
-            await client.PutAsJsonAsync<Hamster>($"HamsterGallery/hamsters/{id}", hamster1);
-
-            playerPressed = true;
-        }
-
     }
 
 
